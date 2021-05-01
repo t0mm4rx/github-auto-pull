@@ -38,7 +38,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 body = self.rfile.read(length)
                 message = json.loads(body)
                 branch = message["ref"].replace("refs/heads/", "")
-                for repo in config:
+                for repo in config["repos"]:
                     if (repo["repo"] == message["repository"]["full_name"]):
                         hash = hmac.new(bytes(repo["secret"], "utf-8"), body, hashlib.sha1)
                         hash = hash.hexdigest()
