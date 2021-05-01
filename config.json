@@ -1,0 +1,6 @@
+{
+    "secret": "dummy",
+    "branch": "main",
+    "directory": "/root/test_repo",
+    "script": "/root/restart_services.sh"
+}
