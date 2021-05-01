@@ -27,16 +27,18 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         """Handle POST request."""
         if (self.path == "/push"):
-            length = int(self.headers["content-length"])
-            body = self.rfile.read(length)
-            message = json.loads(body)
-            branch = message["ref"].replace("refs/heads/", "")
-            print(self.headers)
-
-            hash = hmac.new(bytes("dummy", "utf-8"), body, hashlib.sha1)
-            print(hash.hexdigest())
-            if (branch == config["branch"]):
-                pull()
+            try:
+                length = int(self.headers["content-length"])
+                body = self.rfile.read(length)
+                message = json.loads(body)
+                branch = message["ref"].replace("refs/heads/", "")
+                hash = hmac.new(bytes(config["secret"], "utf-8"), body, hashlib.sha1)
+                hash = hash.hexdigest()
+                hash_received = self.headers["X-Hub-Signature"].split("sha1=")[1]
+                if (branch == config["branch"] and hash_received == hash):
+                    pull()
+            except:
+                print("Cannot process request.")
 
 server_address = ("0.0.0.0", 9999)
 httpd = HTTPServer(server_address, RequestHandler)
