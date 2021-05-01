@@ -2,6 +2,8 @@ import argparse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 import os
+import hashlib
+import hmac
 
 config = {}
 try:
@@ -26,9 +28,13 @@ class RequestHandler(BaseHTTPRequestHandler):
         """Handle POST request."""
         if (self.path == "/push"):
             length = int(self.headers["content-length"])
-            message = json.loads(self.rfile.read(length))
+            body = self.rfile.read(length)
+            message = json.loads(body)
             branch = message["ref"].replace("refs/heads/", "")
             print(self.headers)
+
+            hash = hmac.new("dummy", body, hashlib.sha1)
+            print(hash.hexdigest())
             if (branch == config["branch"]):
                 pull()
 

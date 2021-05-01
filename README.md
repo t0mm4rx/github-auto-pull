@@ -20,7 +20,7 @@ Make sure you have docker and docker-compose installed.
 
    In the payload url field, put **http://your-prod-server:9999/push**.
 
-   In content type, let the default value, **application/x-www-form-urlencode**.
+   In content type, select **application/json**.
 
    In the secret field, define a secret that will be used to authenticate requests to your production server.
 
