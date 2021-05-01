@@ -40,14 +40,15 @@ class RequestHandler(BaseHTTPRequestHandler):
                 branch = message["ref"].replace("refs/heads/", "")
                 for repo in config:
                     if (repo["repo"] == message["repository"]["full_name"]):
-                        hash = hmac.new(bytes(config["secret"], "utf-8"), body, hashlib.sha1)
+                        hash = hmac.new(bytes(repo["secret"], "utf-8"), body, hashlib.sha1)
                         hash = hash.hexdigest()
                         hash_received = self.headers["X-Hub-Signature"].split("sha1=")[1]
-                        if (branch == config["branch"] and hash_received == hash):
+                        if (branch == repo["branch"] and hash_received == hash):
                             pull(repo)
                         else:
                             print("Wrong secret or branch.")
             except:
+                traceback.print_exc()
                 print("Cannot process request.")
 
 server_address = ("0.0.0.0", 9999)
