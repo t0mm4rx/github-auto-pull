@@ -26,9 +26,16 @@ The script will run in a docker container, so it will be resilient to crashes.
 
 ```json
 {
-  "secret": "the secret you defined in your Github hook",
-  "branch": "the branch you want to watch",
-  "directory": "the absolute path to the repo you cloned",
-  "command": "the command to execute after pulling the repo"
+    "repos": [
+        {
+            "repo": "t0mm4rx/test_repo", // Full name of the repo -> gh_user/repo_name
+            "secret": "dummy", // Secret you put when creating the hook
+            "branch": "main", // The branch you want to pull
+            "directory": "/root/test_repo", // The full path of the repo on your production server
+            "command": "/bin/bash /root/restart_services.sh" // The command to execute when the repo is pulled
+        }
+    ]
 }
 ```
+
+You can have multiple repos to watch.
