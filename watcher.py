@@ -33,7 +33,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             branch = message["ref"].replace("refs/heads/", "")
             print(self.headers)
 
-            hash = hmac.new("dummy", body, hashlib.sha1)
+            hash = hmac.new(bytes("dummy", "utf-8"), body, hashlib.sha1)
             print(hash.hexdigest())
             if (branch == config["branch"]):
                 pull()
