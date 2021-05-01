@@ -17,7 +17,7 @@ if (__name__ != "__main__"):
 def pull():
     """Fuction called when the hook is called."""
     print("Hook called.")
-    os.system(f"cd {config['directory']} && git pull && {command}")
+    os.system(f"cd {config['directory']} && git reset --hard && git pull && {command}")
 
 class RequestHandler(BaseHTTPRequestHandler):
     """HTTP request handler class."""
@@ -29,8 +29,8 @@ class RequestHandler(BaseHTTPRequestHandler):
             message = json.loads(self.rfile.read(length))
             branch = message["ref"].replace("refs/heads/", "")
             print(self.headers)
-            if (branch == config["branch"])
-            pull()
+            if (branch == config["branch"]):
+                pull()
 
 server_address = ("0.0.0.0", 9999)
 httpd = HTTPServer(server_address, RequestHandler)
