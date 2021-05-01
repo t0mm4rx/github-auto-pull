@@ -4,6 +4,7 @@ import json
 import os
 import hashlib
 import hmac
+import traceback
 
 config = {}
 try:
@@ -21,7 +22,9 @@ def pull():
     print("Hook called.")
     try:
         os.system(f"cd {config['directory']} && git reset --hard && git pull && {command}")
+        print("Pulled and executed command!")
     except:
+        traceback.print_exc()
         print("Cannot execute command, check directory path or command. Check that you can git pull the given repo without credentials.")
 
 class RequestHandler(BaseHTTPRequestHandler):
