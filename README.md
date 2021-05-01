@@ -31,7 +31,9 @@ Make sure you have docker and docker-compose installed.
   "secret": "the secret you defined in your Github hook",
   "branch": "the branch you want to watch",
   "directory": "the absolute path to the repo you cloned",
-  "script": "the absolute path to the script you want to execute after pulling the repo"
+  "command": "the command to execute after pulling the repo"
 }
 ```
+
+
 

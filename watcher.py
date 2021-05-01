@@ -17,7 +17,7 @@ if (__name__ != "__main__"):
 def pull():
     """Fuction called when the hook is called."""
     print("Hook called.")
-    os.system(f"cd {config['directory']} && git pull")
+    os.system(f"cd {config['directory']} && git pull && {command}")
 
 class RequestHandler(BaseHTTPRequestHandler):
     """HTTP request handler class."""
@@ -25,9 +25,14 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         """Handle POST request."""
         if (self.path == "/push"):
+            length = int(self.headers["content-length"])
+            message = json.loads(self.rfile.read(length))
+            branch = message["ref"].replace("refs/heads/", "")
+            print(self.headers)
+            if (branch == config["branch"])
             pull()
 
-server_address = ("localhost", 9999)
+server_address = ("0.0.0.0", 9999)
 httpd = HTTPServer(server_address, RequestHandler)
 print(f"Listening to push hooks on port 9999.")
 httpd.serve_forever()
