@@ -21,7 +21,7 @@ def pull():
     """Fuction called when the hook is called."""
     print("Hook called.")
     try:
-        os.system(f"cd {config['directory']} && git reset --hard && git pull && {command}")
+        os.system(f"cd {config['directory']} && git reset --hard && git pull && {config['command']}")
         print("Pulled and executed command!")
     except:
         traceback.print_exc()
