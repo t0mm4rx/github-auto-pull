@@ -19,7 +19,10 @@ if (__name__ != "__main__"):
 def pull():
     """Fuction called when the hook is called."""
     print("Hook called.")
-    os.system(f"cd {config['directory']} && git reset --hard && git pull && {command}")
+    try:
+        os.system(f"cd {config['directory']} && git reset --hard && git pull && {command}")
+    except:
+        print("Cannot execute command, check directory path or command. Check that you can git pull the given repo without credentials.")
 
 class RequestHandler(BaseHTTPRequestHandler):
     """HTTP request handler class."""
