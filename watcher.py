@@ -37,6 +37,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                 hash_received = self.headers["X-Hub-Signature"].split("sha1=")[1]
                 if (branch == config["branch"] and hash_received == hash):
                     pull()
+                else:
+                    print("Wrong secret or branch.")
             except:
                 print("Cannot process request.")
 
