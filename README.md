@@ -10,8 +10,6 @@ The script will run in a docker container, so it will be resilient to crashes.
 
 ## Usage
 
-Make sure you have docker and docker-compose installed.
-
 1. Clone the watched repo on your production server. **You must be able to git pull without entering your creds**. You can achieve that by generating a SSH key and upload it to your Github account.
 
 2. Clone this project.
@@ -34,6 +32,3 @@ Make sure you have docker and docker-compose installed.
   "command": "the command to execute after pulling the repo"
 }
 ```
-
-
-

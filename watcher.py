@@ -17,11 +17,11 @@ except:
 if (__name__ != "__main__"):
     exit(1)
 
-def pull():
+def pull(repo):
     """Fuction called when the hook is called."""
     print("Hook called.")
     try:
-        os.system(f"cd {config['directory']} && git reset --hard && git pull && {config['command']}")
+        os.system(f"cd {repo['directory']} && git reset --hard && git pull && {repo['command']}")
         print("Pulled and executed command!")
     except:
         traceback.print_exc()
@@ -38,13 +38,15 @@ class RequestHandler(BaseHTTPRequestHandler):
                 body = self.rfile.read(length)
                 message = json.loads(body)
                 branch = message["ref"].replace("refs/heads/", "")
-                hash = hmac.new(bytes(config["secret"], "utf-8"), body, hashlib.sha1)
-                hash = hash.hexdigest()
-                hash_received = self.headers["X-Hub-Signature"].split("sha1=")[1]
-                if (branch == config["branch"] and hash_received == hash):
-                    pull()
-                else:
-                    print("Wrong secret or branch.")
+                for repo in config:
+                    if (repo["repo"] == message["repository"]["full_name"]):
+                        hash = hmac.new(bytes(config["secret"], "utf-8"), body, hashlib.sha1)
+                        hash = hash.hexdigest()
+                        hash_received = self.headers["X-Hub-Signature"].split("sha1=")[1]
+                        if (branch == config["branch"] and hash_received == hash):
+                            pull(repo)
+                        else:
+                            print("Wrong secret or branch.")
             except:
                 print("Cannot process request.")
 

@@ -1,6 +1,11 @@
 {
-    "secret": "dummy",
-    "branch": "main",
-    "directory": "/root/test_repo",
-    "command": "/bin/bash /root/restart_services.sh"
+    "repos": [
+        {
+            "repo": "t0mm4rx/test_repo",
+            "secret": "dummy",
+            "branch": "main",
+            "directory": "/root/test_repo",
+            "command": "/bin/bash /root/restart_services.sh"
+        }
+    ]
 }
