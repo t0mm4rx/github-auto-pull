@@ -1,3 +1,8 @@
+# DEPRECATED
+
+⚠️ This project is far from being the best way to implement a CI/CD pipeline.
+We migrated all our CI/CD stuff to Github actions, which I recommand you to check instead of this tool.
+
 # Github auto pull
 
 This script helps you deploying your code on production server.
